@@ -27,14 +27,13 @@ void mand(unsigned char *output){
         }
         printf("y %d\n",y);
     }
-    printf("u");
 }
 
 int main() {
-    unsigned char *output = malloc(WIDTH * HEIGHT*2);
+    unsigned char *output = malloc((WIDTH) * (HEIGHT));
     mand(output);
-printf("u");
-    if(!stbi_write_jpg("mand.jpg", WIDTH, HEIGHT, 3, output,1)){
+
+    if(!stbi_write_png("mand.jpg", WIDTH, HEIGHT, 3, output, WIDTH)){
         fprintf(stderr, "Erro ao escrever imagem\n");
         free(output);
         return 1;
