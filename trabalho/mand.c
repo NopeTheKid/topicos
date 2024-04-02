@@ -33,7 +33,7 @@ int main() {
     unsigned char *output = malloc((WIDTH) * (HEIGHT));
     mand(output);
 
-    if(!stbi_write_png("mand.jpg", WIDTH, HEIGHT, 3, output, WIDTH)){
+    if(!stbi_write_png("mand.jpg", WIDTH, HEIGHT, 1, output, WIDTH)){
         fprintf(stderr, "Erro ao escrever imagem\n");
         free(output);
         return 1;
