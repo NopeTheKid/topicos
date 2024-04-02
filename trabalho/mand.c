@@ -14,7 +14,7 @@ typedef struct {
 
 Color getColor(int iter){
     Color colors[] = {
-        {0,0,0},
+        {255,0,0},
         {0,255,0},
         {0,0,255}
     };
