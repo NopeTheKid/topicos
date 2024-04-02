@@ -6,7 +6,7 @@
 
 #define WIDTH 1920
 #define HEIGHT 1080
-#define MAX_ITER 100
+#define MAX_ITER 256
 
 void mand(unsigned char *output){
     for (int y = 0;y < HEIGHT; y++) {
@@ -23,11 +23,11 @@ void mand(unsigned char *output){
                 zx = tmp;
                 iter++;
             }
-           output[(y * WIDTH + x)] = iter;
+           output[(y * WIDTH + x)] = iter/2;
            output[(y * WIDTH + x)+1] = iter;
-           output[(y * WIDTH + x)+2] = iter;
+           output[(y * WIDTH + x)+2] = iter/3;
         }
-        printf("y %d\n",y);
+        
     }
 }
 
