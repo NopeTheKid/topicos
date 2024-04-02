@@ -2,13 +2,15 @@
 #include "stb_image_write.h"
 #include <math.h>
 #include <stdio.h>
+#include <omp.h>
 
-#define WIDTH 800
-#define HEIGHT 600
-#define MAX_ITER 256
+#define WIDTH 1920
+#define HEIGHT 1080
+#define MAX_ITER 100
 
 void mand(unsigned char *output){
     for (int y = 0;y < HEIGHT; y++) {
+        #pragma omp parallel for num_threads(63)
         for (int x = 0;x < WIDTH; x++) {
             double zx = 0, zy = 0;
             double cx = (x- WIDTH/2.0)*4. / WIDTH;
@@ -21,17 +23,17 @@ void mand(unsigned char *output){
                 zx = tmp;
                 iter++;
             }
-            output[(y * WIDTH + x)*3] = iter;
-            output[(y * WIDTH + x)*3+1] = iter;            
-            output[(y * WIDTH + x)*3+2] = iter;
+            output[(y * WIDTH + x)] = iter;
         }
+        printf("y %d\n",y);
     }
+    printf("u");
 }
 
 int main() {
-    unsigned char *output = malloc(WIDTH * HEIGHT * 3);
+    unsigned char *output = malloc(WIDTH * HEIGHT*2);
     mand(output);
-
+printf("u");
     if(!stbi_write_jpg("mand.jpg", WIDTH, HEIGHT, 3, output,1)){
         fprintf(stderr, "Erro ao escrever imagem\n");
         free(output);
