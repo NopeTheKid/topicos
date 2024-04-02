@@ -23,9 +23,9 @@ void mand(unsigned char *output){
                 zx = tmp;
                 iter++;
             }
-           output[(y * WIDTH + x)] = iter/2;
-           output[(y * WIDTH + x)+1] = iter;
-           output[(y * WIDTH + x)+2] = iter/3;
+            //output[(y * WIDTH + x)] = iter;
+            output[(y * WIDTH + x)+1] = iter;
+            output[(y * WIDTH + x)+2] = iter;
         }
         
     }
