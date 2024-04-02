@@ -8,6 +8,23 @@
 #define HEIGHT 4320
 #define MAX_ITER 256
 
+typedef struct {
+    unsigned char r,g,b
+} Color;
+
+Color getColor(int iter){
+    Color colors[] = {
+        {0,0,0},
+        {0,255,0},
+        {0,0,255}
+    };
+    int numColors = sizeof(colors)/sizeof(colors[0]);
+    if(iter >= 3)
+        return colors[numColors - 1];
+    else 
+        return colors[iter % numColors];
+}
+
 void mand(unsigned char *output){
     for (int y = 0;y < HEIGHT; y++) {
         #pragma omp parallel for num_threads(63)
@@ -23,10 +40,10 @@ void mand(unsigned char *output){
                 zx = tmp;
                 iter++;
             }
-            
-            output[(y * WIDTH + x)*3] = iter;     // R
-            output[(y * WIDTH + x)*3+1] = iter/10;   // G
-            output[(y * WIDTH + x)*3+2] = iter/2;   // B
+            Color color = getColor(iter);
+            output[(y * WIDTH + x)*3] = color.r;     // R
+            output[(y * WIDTH + x)*3+1] = color.g;   // G
+            output[(y * WIDTH + x)*3+2] = color.b;   // B
         } 
     }
 }
