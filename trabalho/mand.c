@@ -24,7 +24,7 @@ Color getColor(int iter){
         black, black, black, black,
         black, black, black, black,
         {134, 181, 229}, {211, 236, 248}, {241, 233, 191}, {248, 201, 95},
-        {255, 170, 0}, {204, 128, 0}, {153, 87, 0}, black}
+        {255, 170, 0}, {204, 128, 0}, {153, 87, 0}, black
     };
     int numColors = sizeof(colors)/sizeof(colors[0]);
    
