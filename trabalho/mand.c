@@ -4,10 +4,10 @@
 #include <stdio.h>
 #include <omp.h>
 
-//#define WIDTH 7680
-//#define HEIGHT 4320
-#define WIDTH 1920
-#define HEIGHT 1080
+#define WIDTH 7680
+#define HEIGHT 4320
+//#define WIDTH 1920
+//#define HEIGHT 1080
 #define MAX_ITER 256
 
 typedef struct {
