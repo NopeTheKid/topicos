@@ -28,8 +28,11 @@ Color getColor(int iter){
     };
     int numColors = sizeof(colors)/sizeof(colors[0]);
    
-    
-    return colors[iter % numColors];
+    if(iter < (256-16))
+        return colors[iter % numColors];
+    else {
+        return black;
+    }
 }
 
 void mand(unsigned char *output){
