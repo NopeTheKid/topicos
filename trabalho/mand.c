@@ -28,7 +28,7 @@ Color getColor(int iter){
     };
     int numColors = sizeof(colors)/sizeof(colors[0]);
    
-    if(iter < (256-16))
+    if(iter < (16))
         return colors[iter % numColors];
     else {
         return black;
@@ -54,9 +54,7 @@ void mand(unsigned char *output){
             output[(y * WIDTH + x)*3] = color.r;     // R
             output[(y * WIDTH + x)*3+1] = color.g;   // G
             output[(y * WIDTH + x)*3+2] = color.b;   // B
-            printf("%d\t",iter);
         } 
-        printf("\n");
     }
 }
 
