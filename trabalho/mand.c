@@ -4,8 +4,10 @@
 #include <stdio.h>
 #include <omp.h>
 
-#define WIDTH 7680
-#define HEIGHT 4320
+//#define WIDTH 7680
+//#define HEIGHT 4320
+#define WIDTH 1920
+#define HEIGHT 1080
 #define MAX_ITER 256
 
 typedef struct {
@@ -25,7 +27,7 @@ Color getColor(int iter){
     black.r = 0;
     black.g = 0;
     black.b = 0;
-    if(iter < 50){
+    if(iter < 250){
         if(iter >= MAX_ITER)
             return colors[numColors - 1];
         else 
