@@ -26,14 +26,14 @@ Color getColor(int iter){
     black.r = 0;
     black.g = 0;
     black.b = 0;
-    if(iter > 150){
+    //if(iter > 150){
         if(iter >= MAX_ITER)
             return colors[numColors - 1];
         else 
             return colors[iter % numColors];
-    }else{
-        return black;
-    }
+    //}else{
+    //    return black;
+    //}
 }
 
 void mand(unsigned char *output){
