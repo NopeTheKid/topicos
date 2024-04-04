@@ -14,17 +14,21 @@ typedef struct {
 
 Color getColor(int iter){
     Color colors[] = {
-        {66, 30, 15}, {25, 7, 26}, {9, 1, 47}, {4, 4, 73},
+        {0,0,0},{66, 30, 15}, {25, 7, 26}, {9, 1, 47}, {4, 4, 73},
         {0, 7, 100}, {12, 44, 138}, {24, 82, 177}, {57, 125, 209},
         {134, 181, 229} 
     };
     // {211, 236, 248}, {241, 233, 191}, {248, 201, 95},
     //    {255, 170, 0}, {204, 128, 0}, {153, 87, 0}, {106, 52, 3}
     int numColors = sizeof(colors)/sizeof(colors[0]);
-    if(iter >= MAX_ITER)
-        return colors[numColors - 1];
-    else 
-        return colors[iter % numColors];
+    if(iter < 100){
+        if(iter >= MAX_ITER)
+            return colors[numColors - 1];
+        else 
+            return colors[iter % numColors];
+    }else{
+        return colors[0];
+    }
 }
 
 void mand(unsigned char *output){
@@ -46,9 +50,7 @@ void mand(unsigned char *output){
             output[(y * WIDTH + x)*3] = color.r;     // R
             output[(y * WIDTH + x)*3+1] = color.g;   // G
             output[(y * WIDTH + x)*3+2] = color.b;   // B
-            printf("%d ",iter);
         } 
-        printf("\n");
     }
 }
 
