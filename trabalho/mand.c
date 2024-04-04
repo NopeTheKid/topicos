@@ -26,7 +26,7 @@ Color getColor(int iter){
     black.r = 0;
     black.g = 0;
     black.b = 0;
-    if(iter > 150 && iter < 256){
+    if(iter < 150 && iter > 256){
         if(iter >= MAX_ITER)
             return colors[numColors - 1];
         else 
