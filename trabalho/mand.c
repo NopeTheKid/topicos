@@ -14,7 +14,7 @@ typedef struct {
 
 Color getColor(int iter){
     Color colors[] = {
-        {0,0,0},{66, 30, 15}, {25, 7, 26}, {9, 1, 47}, {4, 4, 73},
+        {66, 30, 15}, {25, 7, 26}, {9, 1, 47}, {4, 4, 73},
         {0, 7, 100}, {12, 44, 138}, {24, 82, 177}, {57, 125, 209},
         {134, 181, 229} 
     };
@@ -27,7 +27,11 @@ Color getColor(int iter){
         else 
             return colors[iter % numColors];
     }else{
-        return colors[0];
+        Color black;
+        black.r = 0;
+        black.g = 0;
+        black.b = 0;
+        return black;
     }
 }
 
