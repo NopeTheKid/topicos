@@ -21,7 +21,7 @@ Color getColor(int iter){
     // {211, 236, 248}, {241, 233, 191}, {248, 201, 95},
     //    {255, 170, 0}, {204, 128, 0}, {153, 87, 0}, {106, 52, 3}
     int numColors = sizeof(colors)/sizeof(colors[0]);
-    if(iter < 100){
+    if(iter < 200){
         if(iter >= MAX_ITER)
             return colors[numColors - 1];
         else 
