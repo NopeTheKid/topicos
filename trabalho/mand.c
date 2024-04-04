@@ -20,9 +20,9 @@ Color getColor(int iter){
     black.g = 0;
     black.b = 0;
     Color white;
-    white.r = 256;
-    white.g = 256;
-    white.b = 256;
+    white.r = 255;
+    white.g = 255;
+    white.b = 255;
     
     Color colors[] = {
         white, {25, 7, 26}, {9, 1, 47}, {4, 4, 73},
