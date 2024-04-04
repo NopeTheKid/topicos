@@ -28,7 +28,7 @@ Color getColor(int iter){
     };
     int numColors = sizeof(colors)/sizeof(colors[0]);
    
-    if(iter < (16))
+    if(iter > 16)
         return colors[iter % numColors];
     else {
         return black;
