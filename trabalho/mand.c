@@ -54,7 +54,9 @@ void mand(unsigned char *output){
             output[(y * WIDTH + x)*3] = color.r;     // R
             output[(y * WIDTH + x)*3+1] = color.g;   // G
             output[(y * WIDTH + x)*3+2] = color.b;   // B
+            printf("%d\t",iter);
         } 
+        printf("\n");
     }
 }
 
