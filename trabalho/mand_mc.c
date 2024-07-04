@@ -7,10 +7,8 @@
  
 #define WIDTH 7680
 #define HEIGHT 4320
-//#define WIDTH 1920
-//#define HEIGHT 1080
 #define MAX_ITER 1000
-
+         
 typedef struct {
     unsigned char r,g,b
 } Color;
