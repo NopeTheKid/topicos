@@ -42,10 +42,13 @@ Color getColor(int iter){
  
 void mand(unsigned char *output){
     clock_t t_inicio, t_final;
+    int n_threads = 1;
+    int NCORES = 96;
     t_inicio = clock();
-
+    #pragma omp parallel for collapse(1) num_threads(NCORES) shared(output)
     for (int y = 0;y < HEIGHT; y++) {
         for (int x = 0;x < WIDTH; x++) {
+            n_threads = omp_get_num_threads();
             double zx = 0, zy = 0;
             double cx = (x- WIDTH/2.0)*4. / WIDTH;
             double cy = (y- HEIGHT/2.0)*4. / HEIGHT;
@@ -65,7 +68,7 @@ void mand(unsigned char *output){
     }
 
     t_final = clock();
-    printf("Tempo de execução %g segundos\n", (double)(t_final-t_inicio) / CLOCKS_PER_SEC);
+    printf("N. Threads: %d\nTempo de execução %g segundos\n", n_threads, (double)(t_final-t_inicio) / CLOCKS_PER_SEC);
 }
  
 int main() {
