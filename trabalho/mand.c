@@ -3,12 +3,13 @@
 #include <math.h>
 #include <stdio.h>
 #include <omp.h>
+#include <time.h>
 
 #define WIDTH 7680
 #define HEIGHT 4320
 //#define WIDTH 1920
 //#define HEIGHT 1080
-#define MAX_ITER 256
+#define MAX_ITER 1000
 
 typedef struct {
     unsigned char r,g,b
@@ -40,8 +41,10 @@ Color getColor(int iter){
 }
 
 void mand(unsigned char *output){
+    int t_inicio = time(0);
+    int t_final;
     for (int y = 0;y < HEIGHT; y++) {
-        #pragma omp parallel for num_threads(63)
+        #pragma omp parallel for num_threads(112) 
         for (int x = 0;x < WIDTH; x++) {
             double zx = 0, zy = 0;
             double cx = (x- WIDTH/2.0)*4. / WIDTH;
@@ -58,8 +61,12 @@ void mand(unsigned char *output){
             output[(y * WIDTH + x)*3] = color.r;     // R
             output[(y * WIDTH + x)*3+1] = color.g;   // G
             output[(y * WIDTH + x)*3+2] = color.b;   // B
+            //sleep(1/1000);
         } 
     }
+
+    t_final = time(0);
+    printf("Tempo de execução %d\n", (t_final-t_inicio));
 }
 
 int main() {

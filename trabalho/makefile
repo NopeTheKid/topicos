@@ -1,6 +1,6 @@
 all: mand
 
-CC=nvc
+#CC=nvc
 CFLAGS=-fopenmp
 
 mand : mand.c
