@@ -7,7 +7,7 @@
 
 #define WIDTH 7680
 #define HEIGHT 4320
-//#define WIDTH 1920
+//#define WIDTH 192
 //#define HEIGHT 1080
 #define MAX_ITER 1000
 
@@ -34,31 +34,56 @@ Color getColor(int iter) {
     }
 }
 
-void mand(unsigned char *output) {
-    clock_t t_inicio, t_final;
-    t_inicio = clock();
-    
-    #pragma omp parallel for collapse(2)
-    for (int y = 0; y < HEIGHT; y++) {
-        for (int x = 0; x < WIDTH; x++) {
-            double zx = 0, zy = 0;
-            double cx = (x - WIDTH / 2.0) * 4.0 / WIDTH;
-            double cy = (y - HEIGHT / 2.0) * 4.0 / HEIGHT;
-            int iter = 0;
-    
-            while (zx * zx + zy * zy < 4 && iter < MAX_ITER) {
-                double tmp = zx * zx - zy * zy + cx;
-                zy = 2 * zx * zy + cy;
-                zx = tmp;
-                iter++;
-            }
-
-            Color color = getColor(iter);
-            output[(y * WIDTH + x) * 3] = color.r;     // R
-            output[(y * WIDTH + x) * 3 + 1] = color.g; // G
-            output[(y * WIDTH + x) * 3 + 2] = color.b; // B
+void mand_device(unsigned char *output,
+                 unsigned char *output_dev, 
+                 int nrows, int ncols,
+                 int dev, int num_devices){
+    const int delta_rows = nrows / num_devices;
+    int cc=0;
+    for (int row = dev*delta_rows; row < delta_rows*(dev+1); row++) {
+        for (int col=0; col < ncols; col++) {
+            int idx = (row * WIDTH + col)*3;
+            output_dev[cc] = (int) output[idx];
+            cc++;
         }
     }
+}
+
+void mand(unsigned char *output) {
+    clock_t t_inicio, t_final;
+    int num_devices = 4;
+    int ncols = WIDTH;
+    int delta_rows = HEIGHT / num_devices;
+    t_inicio = clock();
+    for (int dev=0;dev < num_devices; dev++) {
+        unsigned char *output_dev = malloc((WIDTH) * (delta_rows) * 3);
+
+        #pragma omp target teams device(dev) distribute parallel for collapse(1) \
+        map(output_dev[0:delta_rows*ncols]) \
+        map(delta_rows,ncols,dev)
+	    for (int y = 0; y < HEIGHT; y++) {
+	        for (int x = 0; x < WIDTH; x++) {
+	            double zx = 0, zy = 0;
+	            double cx = (x - WIDTH / 2.0) * 4.0 / WIDTH;
+	            double cy = (y - HEIGHT / 2.0) * 4.0 / HEIGHT;
+	            int iter = 0;
+	    
+	            while (zx * zx + zy * zy < 4 && iter < MAX_ITER) {
+	                double tmp = zx * zx - zy * zy + cx;
+	                zy = 2 * zx * zy + cy;
+	                zx = tmp;
+	                iter++;
+	            }
+
+	            Color color = getColor(iter);
+	            output[(y * WIDTH + x) * 3] = color.r;     // R
+	            output[(y * WIDTH + x) * 3 + 1] = color.g; // G
+	            output[(y * WIDTH + x) * 3 + 2] = color.b; // B
+	        }
+	    }
+        mand_device(output, output_dev, HEIGHT, WIDTH, dev, num_devices);
+        free(output_dev);
+	}
 
     t_final = clock();
     printf("Tempo de execução %g segundos\n", (double)(t_final - t_inicio) / CLOCKS_PER_SEC);
